@@ -1,0 +1,10 @@
+import"./assets/modulepreload-polyfill-3cfb730f.js";import{f as h,i as s}from"./assets/vendor-77e16229.js";const o={startBtn:document.querySelector("[data-start]"),days:document.querySelector("[data-days]"),hours:document.querySelector("[data-hours]"),minutes:document.querySelector("[data-minutes]"),seconds:document.querySelector("[data-seconds]")};let i,c;o.startBtn?(o.startBtn.disabled=!0,o.startBtn.addEventListener("click",()=>{c=setInterval(f,1e3),o.startBtn.disabled=!0,document.querySelector("#datetime-picker").disabled=!0})):console.error("Start button not found");function f(){const e=i-new Date;if(e<=0){clearInterval(c),a({days:0,hours:0,minutes:0,seconds:0}),document.querySelector("#datetime-picker").disabled=!1;return}const n=y(e);a(n)}function y(t){const d=Math.floor(t/864e5),u=Math.floor(t%864e5/36e5),l=Math.floor(t%864e5%36e5/6e4),m=Math.floor(t%864e5%36e5%6e4/1e3);return{days:d,hours:u,minutes:l,seconds:m}}function a({days:t,hours:e,minutes:n,seconds:r}){o.days.textContent=String(t).padStart(2,"0"),o.hours.textContent=String(e).padStart(2,"0"),o.minutes.textContent=String(n).padStart(2,"0"),o.seconds.textContent=String(r).padStart(2,"0")}h("#datetime-picker",{enableTime:!0,time_24hr:!0,defaultDate:new Date,minuteIncrement:1,onClose(t){const e=new Date;t[0]<=e?(p("Please choose a date in the future"),o.startBtn.disabled=!0):(s.hide({},document.querySelector(".iziToast")),o.startBtn.disabled=!1,i=t[0])}});async function p(t){try{const n=`
+      <div style="display: flex; align-items: center; color: white;">
+        <div style="margin-right: 10px; width: 24px; height: 24px;">
+          ${await g("./img/icon-error.svg")}
+        </div>
+        <span style="font-weight: bold; margin-right: 10px;"></span>
+        <span>${t}</span>
+      </div>
+    `;s.error({title:"",message:n,position:"topRight",timeout:5e3,titleColor:"white",messageColor:"white",backgroundColor:"#EF4040",icon:!1,theme:"dark"})}catch(e){console.error("Error loading SVG icon:",e)}}async function g(t){const e=await fetch(t);if(!e.ok)throw new Error(`Failed to load SVG icon: ${e.statusText}`);return await e.text()}
+//# sourceMappingURL=commonHelpers.js.map
