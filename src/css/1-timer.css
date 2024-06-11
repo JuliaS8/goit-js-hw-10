@@ -1,0 +1,58 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin-top: 80px;
+  font-weight: 200;
+}
+
+p {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+input#datetime-picker {
+  margin-top: 50px;
+  width: 280px;
+  padding: 10px;
+  border: 1px solid #80808093;
+  border-radius: 5px;
+}
+
+button[data-start] {
+  background-color: lightgray;
+  margin-left: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.value {
+  font-size: 50px;
+}
+
+.label {
+  font-size: 20px;
+}
+
+.iziToast {
+  width: 350px !important;
+}
