@@ -1,28 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-  onClose(selectedDates) {
-    const now = new Date();
-    if (selectedDates[0] <= now) {
-      showErrorMessage('Please choose a date in the future');
-      refs.startBtn.disabled = true;
-    } else {
-      iziToast.hide({}, document.querySelector('.iziToast'));
-      refs.startBtn.disabled = false;
-      userSelectedDate = selectedDates[0];
-    }
-  },
-};
-
-flatpickr('#datetime-picker', options);
 
 const refs = {
   startBtn: document.querySelector('[data-start]'),
@@ -35,13 +14,17 @@ const refs = {
 let userSelectedDate;
 let intervalId;
 
-refs.startBtn.disabled = true;
-
-refs.startBtn.addEventListener('click', () => {
-  intervalId = setInterval(updateClockface, 1000);
+if (refs.startBtn) {
   refs.startBtn.disabled = true;
-  document.querySelector('#datetime-picker').disabled = true;
-});
+
+  refs.startBtn.addEventListener('click', () => {
+    intervalId = setInterval(updateClockface, 1000);
+    refs.startBtn.disabled = true;
+    document.querySelector('#datetime-picker').disabled = true;
+  });
+} else {
+  console.error('Start button not found');
+}
 
 function updateClockface() {
   const now = new Date();
@@ -79,6 +62,24 @@ function displayTime({ days, hours, minutes, seconds }) {
   refs.seconds.textContent = String(seconds).padStart(2, '0');
 }
 
+flatpickr('#datetime-picker', {
+  enableTime: true,
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose(selectedDates) {
+    const now = new Date();
+    if (selectedDates[0] <= now) {
+      showErrorMessage('Please choose a date in the future');
+      refs.startBtn.disabled = true;
+    } else {
+      iziToast.hide({}, document.querySelector('.iziToast'));
+      refs.startBtn.disabled = false;
+      userSelectedDate = selectedDates[0];
+    }
+  },
+});
+
 async function showErrorMessage(message) {
   try {
     const svgIcon = await loadSvgIcon('./img/icon-error.svg');
@@ -87,7 +88,7 @@ async function showErrorMessage(message) {
         <div style="margin-right: 10px; width: 24px; height: 24px;">
           ${svgIcon}
         </div>
-        <span style="font-weight: bold; margin-right: 10px;">Error</span>
+        <span style="font-weight: bold; margin-right: 10px;"></span>
         <span>${message}</span>
       </div>
     `;
