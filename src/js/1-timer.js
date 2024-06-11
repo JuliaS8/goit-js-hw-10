@@ -2,6 +2,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import imgUrl from '../img/icon-error.svg';
 
 const refs = {
   startBtn: document.querySelector('[data-start]'),
@@ -85,13 +86,10 @@ flatpickr('#datetime-picker', {
 
 async function showErrorMessage(message) {
   try {
-    const svgIcon = await loadSvgIcon('./img/icon-error.svg');
     const errorHtml = `
-      <div style="display: flex; align-items: center; color: white;">
+      <div style="display: flex; align-items: center;">
         <div style="margin-right: 10px; width: 24px; height: 24px;">
-          ${svgIcon}
         </div>
-        <span style="font-weight: bold; margin-right: 10px;"></span>
         <span>${message}</span>
       </div>
     `;
@@ -100,11 +98,11 @@ async function showErrorMessage(message) {
       message: errorHtml,
       position: 'topRight',
       timeout: 5000,
-      titleColor: 'white',
       messageColor: 'white',
       backgroundColor: '#EF4040',
       icon: false,
       theme: 'dark',
+      iconUrl: imgUrl,
     });
   } catch (error) {
     console.error('Error loading SVG icon:', error);
